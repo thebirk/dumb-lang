@@ -1,0 +1,13 @@
+,Read write test,
+,Output should be:
+	3
+	6
+	3
+	6
+,
++++w!
+>
++++w!
+<r!
+zw
+>r!

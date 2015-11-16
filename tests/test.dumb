@@ -1,0 +1,10 @@
+,
+ Test program
+Correct output: 
+	"3"
+	"6"
+	"0"
+,
++++! ,Increment by 3 then print,
++++! ,Increment by 3 then print,
+z!   ,Zero then print,
