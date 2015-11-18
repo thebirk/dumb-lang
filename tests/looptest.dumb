@@ -1,0 +1,14 @@
+,Loop test,
+,Output should be:
+	2
+	3
+	4
+	1
+,
+++w!
+z++
+[
++!
+>w<r-w>r<
+]
+---!

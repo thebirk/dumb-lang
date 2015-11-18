@@ -1,0 +1,8 @@
+,Multiplication,
+?>w ,Get input. store at second cell,
+<?w ,Get input store at first cell,
+[
+	>r>aw ,Add value in second cell to value in third cell. Store result in third cell,
+	<<r-w ,Decrement value in first cell,
+]
+>>r! ,Print value at first cell,

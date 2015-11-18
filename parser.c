@@ -96,6 +96,18 @@ defmethod(Parser, TokenList*, Parse)
 			case 'S':
 				list = list_add(list, TOKEN_READ_SUB);
 				break;
+			case '[':
+				list = list_add(list, TOKEN_LOOP_START);
+				break;
+			case ']':
+				list = list_add(list, TOKEN_LOOP_END);
+				break;
+			case '%':
+				list = list_add(list, TOKEN_LOAD);
+				break;
+			case '/':
+				list = list_add(list, TOKEN_SAVE);
+				break;
 				
 			case '\n':
 			case '\r':
