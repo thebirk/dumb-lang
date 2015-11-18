@@ -7,9 +7,24 @@
 /*
 
 Add support for loops inside loops
+	How to do loops:
 
-If arguments "-c" is present, then output a c program which can compile by itself
+	Keep track of how many times the current loop is nested, when exiting a loop,
+	use that number to figure out where to jump back to.
 
+Add support for another loop that loops to a certain condition.
+	Example:
+		+++++++++wz={+}
+		
+		This will loop as long ass acc != mem[mempos]
+		Syntax is:
+			condition { tokens }
+		Where condition is either >, <, =, !=, >=, <=
+	For the c-codegen, use the letter C for the label names
+
+Add support for a kind of preprocessor.
+	#+123 - This would be replaced by '+' * 123
+	#-64  - This would be replaced by '-' * 64
 */
 
 
@@ -50,9 +65,11 @@ void compile_list(TokenList *list)
 	
 	fprintf(f, "uint16_t acc = 0;\n");
 	fprintf(f, "uint16_t *mem = (uint16_t*)malloc(sizeof(uint16_t)*0x10000);\n");
+	fprintf(f, "int i;\nfor(i = 0; i < 0x10000; i++) {\nmem[i]=0;\n}\n");
 	fprintf(f, "uint16_t memoffs = 0;\n");
 	fprintf(f, "int val;\n");
 	fprintf(f, "int ret;\n");
+	fprintf(f, "char buffer[10];\n");
 	
 	int label_num = 0;
 	int open = 0;
@@ -73,7 +90,6 @@ void compile_list(TokenList *list)
 				fprintf(f, "if(memoffs > 0) memoffs--;\n");
 				break;
 			case TOKEN_INPUT:
-				fprintf(f, "printf(\": \");\n");
 				fprintf(f, "ret = scanf(\"%%d\", &val);\n");
 				fprintf(f, "if(ret == EOF || ret == 0) {\nprintf(\"Invalid input!\\n\");\nexit(EXIT_FAILURE);\n}\n");
 				fprintf(f, "acc = val;\n");
@@ -110,6 +126,14 @@ void compile_list(TokenList *list)
 				break;
 			case TOKEN_SAVE:
 				fprintf(f, "acc = memoffs;\n");
+				break;
+			case TOKEN_INPUT_CHAR:
+//				fprintf(f, "fgets(input_buffer, 10, stdin)\n");
+//				fprintf(f, "acc = input_buffer[0]\n");
+				fprintf(f, "acc = getchar();\n");
+				break;
+			case TOKEN_OUTPUT_CHAR:
+				fprintf(f, "printf(\"%%c\", acc);\n");
 				break;
 		}
 	}
@@ -166,6 +190,9 @@ int main(int argc, char **argv)
 	
 	int loopstart = 0;
 	int loopend = 0;
+	char input_buffer[10];
+	int val;
+	int ret;
 	
 	for(i = 0; i < list->size; i++) {
 		switch(list->tokens[i]) {
@@ -182,10 +209,7 @@ int main(int argc, char **argv)
 				if(memoffs > 0) memoffs--;
 				break;
 			case TOKEN_INPUT:
-				printf(": ");
-			
-				int val;
-				int ret = scanf("%d", &val);
+				ret = scanf("%d", &val);
 				
 				if(ret == EOF || ret == 0) {
 					printf("Invalid input!\n");
@@ -196,7 +220,7 @@ int main(int argc, char **argv)
 				
 				break;
 			case TOKEN_OUTPUT:
-				printf("%d\n", acc);
+				printf("%d", acc);
 				break;
 			case TOKEN_ZERO:
 				acc = 0;
@@ -227,6 +251,15 @@ int main(int argc, char **argv)
 				break;
 			case TOKEN_SAVE:
 				acc = memoffs;
+				break;
+			case TOKEN_INPUT_CHAR:
+				//printf(": ");
+				//fgets(input_buffer, 10, stdin);
+				//acc = input_buffer[0];
+				acc = getchar();
+				break;
+			case TOKEN_OUTPUT_CHAR:
+				printf("%c", acc);
 				break;
 		}
 	}

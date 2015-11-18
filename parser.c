@@ -108,7 +108,13 @@ defmethod(Parser, TokenList*, Parse)
 			case '/':
 				list = list_add(list, TOKEN_SAVE);
 				break;
-				
+			case '.':
+				list = list_add(list, TOKEN_INPUT_CHAR);
+				break;
+			case ':':
+				list = list_add(list, TOKEN_OUTPUT_CHAR);
+				break;			
+			
 			case '\n':
 			case '\r':
 			case '\t':
