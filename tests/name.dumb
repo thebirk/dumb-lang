@@ -1,0 +1,34 @@
+,A program,
+zw>++++++++w [<r++++++++++w>r-w] <r--w        ,N,
+>zw>++++++w [<r++++++++++w>r-w] <r+++++w      ,A,
+>zw>++++++++w [<r++++++++++w>r-w] <r---w      ,M,
+>zw>+++++++w [<r++++++++++w>r-w] <r-w         ,E,
+>zw>++++++w [<r++++++++++w>r-w] <r--w         ,:,
+>zw>+++w [<r++++++++++w>r-w] <r++w            , ,
+>zw
+
+,Print prompt,
+z%[r:>]
+
+,Put message in mem,
+z%
+zw>+++++++++w [<r++++++++++w>r-w] <r---w    ,W,
+>zw>+++++++w [<r++++++++++w>r-w] <r-w       ,E,
+>zw>++++++++w [<r++++++++++w>r-w] <r----w   ,L,
+>zw>+++++++w [<r++++++++++w>r-w] <r---w     ,C,
+>zw>++++++++w [<r++++++++++w>r-w] <r-w      ,O,
+>zw>++++++++w [<r++++++++++w>r-w] <r---w    ,M,
+>zw>+++++++w [<r++++++++++w>r-w] <r-w       ,E,
+>zw>+++w [<r++++++++++w>r-w] <r++w          , ,
+>zw
+
+,Get input 8 char,
+>zw>++++++++w [<.w>r->w] <zw
+
+,Print message name mark and linefeed,
+z%[r:>]>[r:>]
+z%
+zw>+++w [<r++++++++++w>r-w] <r+++w           ,!,
+>z++++++++++w
+>zw
+z%[r:>]

@@ -1,0 +1,42 @@
+,Name 2.0,
+zw>++++++++w [<r++++++++++w>r-w] <r--w        ,N,
+>zw>++++++w [<r++++++++++w>r-w] <r+++++w      ,A,
+>zw>++++++++w [<r++++++++++w>r-w] <r---w      ,M,
+>zw>+++++++w [<r++++++++++w>r-w] <r-w         ,E,
+>zw>++++++w [<r++++++++++w>r-w] <r--w         ,:,
+>zw>+++w [<r++++++++++w>r-w] <r++w            , ,
+>zw
+
+,Print prompt,
+z%[r:>]
+
+,Put message in mem,
+z%
+zw>+++++++++w [<r++++++++++w>r-w] <r---w    ,W,
+>zw>+++++++w [<r++++++++++w>r-w] <r-w       ,E,
+>zw>++++++++w [<r++++++++++w>r-w] <r----w   ,L,
+>zw>+++++++w [<r++++++++++w>r-w] <r---w     ,C,
+>zw>++++++++w [<r++++++++++w>r-w] <r-w      ,O,
+>zw>++++++++w [<r++++++++++w>r-w] <r---w    ,M,
+>zw>+++++++w [<r++++++++++w>r-w] <r-w       ,E,
+>zw>+++w [<r++++++++++w>r-w] <r++w          , ,
+>zw                                         ,ZERO,
+
+,Read character to mem as usal.. then subtract a certain number like the ascii value
+ of '.'.. This should be done inside a loop. If this loop continues then we have matched the char '.'
+ When we match stop accepting more input.
+ Cap the name length by only printing lets say 16 chars at a max
+ 
+ !!!! THIS PROBABLY REQUIRES NESTED LOOPS. SO FUCKING MAKE NESTED LOOPS WORK! !!!!
+ ,
+
+,Get input 8 char,
+>zw>++++++++w [<.w>r->w] <zw
+
+,Print message name mark and linefeed,
+z%[r:>]>[r:>]
+z%
+zw>+++w [<r++++++++++w>r-w] <r+++w           ,!,
+>z++++++++++w                                ,NL,
+>zw                                          ,ZERO,
+z%[r:>]

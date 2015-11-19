@@ -6,11 +6,16 @@
 
 /*
 
-Add support for loops inside loops
+Add support for nested loops
 	How to do loops:
 
 	Keep track of how many times the current loop is nested, when exiting a loop,
 	use that number to figure out where to jump back to.
+	
+	OOORRR:
+	Keep a stack of loop locations
+	When entering a loop push it location to the stack.
+	When leaving a loop pop the stack
 
 Add support for another loop that loops to a certain condition.
 	Example:
@@ -27,6 +32,45 @@ Add support for a kind of preprocessor.
 	#-64  - This would be replaced by '-' * 64
 */
 
+typedef struct{
+	int *data;
+	int size;
+	int pointer;
+} Stack;
+
+Stack* stack_new(int size)
+{
+	Stack *s = new(Stack);
+	s->size = size;
+	s->data = malloc(sizeof(int)*size);
+	
+	int i;
+	for(i = 0; i < s->size; i++) {
+		s->data[i] = 0;
+	}
+	
+	s->pointer = 0;
+}
+
+int stack_peek(Stack *stack)
+{
+	return stack->data[stack->pointer];
+}
+
+int stack_pop(Stack *stack)
+{
+	return stack->data[stack->pointer--];
+	if(stack->pointer <= 0) stack->pointer = 0;
+}
+
+void stack_push(Stack *stack, int i)
+{
+	stack->pointer++;
+	if(stack->pointer >= stack->size) {
+		stack->pointer = stack->size-1;
+	}
+	stack->data[stack->pointer] = i;
+}
 
 void print_help()
 {
@@ -189,7 +233,8 @@ int main(int argc, char **argv)
 	}
 	
 	int loopstart = 0;
-	int loopend = 0;
+	Stack *loopstack = stack_new(0x200);
+	
 	char input_buffer[10];
 	int val;
 	int ret;
@@ -238,12 +283,12 @@ int main(int argc, char **argv)
 				acc -= mem[memoffs];
 				break;
 			case TOKEN_LOOP_START:
-				loopstart = i;
-				find_loop(list, loopstart, &loopend);
+				stack_push(loopstack, i);
+				//find_loop(list, loopstart, &loopend);
 				break;
 			case TOKEN_LOOP_END:
 				if(mem[memoffs] != 0) {
-					i = loopstart;
+					i = stack_peek(loopstack);
 				}
 				break;
 			case TOKEN_LOAD:
